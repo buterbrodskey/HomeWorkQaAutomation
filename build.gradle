@@ -17,6 +17,7 @@ dependencies {
     //database
     implementation 'com.h2database:h2:1.4.194'
     testImplementation group: 'com.h2database', name: 'h2', version: '1.4.200'
+    compile 'org.junit.jupiter:junit-jupiter-params:5.8.0-M1'
 }
 
 test {
