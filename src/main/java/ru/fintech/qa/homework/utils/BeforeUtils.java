@@ -10,7 +10,7 @@ public class BeforeUtils {
         return DriverManager.getConnection("jdbc:h2:mem:myDb;DB_CLOSE_DELAY=-1", "sa", "sa");
     }
 
-    public static void createData(){
+    public static void createData() {
         System.out.println("beforeAll");
         try {
             executeUpdate("CREATE TABLE public.places (\n"
@@ -129,10 +129,10 @@ public class BeforeUtils {
 
     private static void executeUpdate(String sql) throws SQLException, ClassNotFoundException {
         Connection connection = getConnection();
-         connection
+        connection
                 .createStatement()
                 .executeUpdate(sql);
-         connection.close();
+        connection.close();
     }
 
 }

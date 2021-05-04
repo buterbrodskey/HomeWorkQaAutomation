@@ -18,10 +18,11 @@ public class DBService {
         } catch (Exception e) {
             result = 0;
         }
+        connection.close();
         return result != 0;
     }
 
-    public static int executeQueryGetCountRows(String table) throws SQLException {
+    public static int executeQueryGetCountRows(final String table) throws SQLException {
         Connection connection = DBClient.getConnection();
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery("select count(*) as count from public." + table);
@@ -31,7 +32,7 @@ public class DBService {
         return actualQuantity;
     }
 
-    public static boolean addAnimalWithId(int id) throws SQLException {
+    public static boolean addAnimalWithId(final int id) throws SQLException {
         int result;
         Connection connection = DBClient.getConnection();
         Statement statement = connection.createStatement();
@@ -40,31 +41,35 @@ public class DBService {
         } catch (Exception e) {
             result = 0;
         }
+        connection.close();
         return result != 0;
     }
 
     public static boolean addWorkmanWithNullName() throws SQLException {
+        boolean result;
         Connection connection = DBClient.getConnection();
         Statement statement = connection.createStatement();
         try {
-            statement.executeUpdate("insert into public.workman (id,\"name\") values (199,null)"); // случайное число, чтоб подзапрос на количество занятых id не делать, показалось избыточным
-            return true;
+            statement.executeUpdate("insert into public.workman (id,\"name\") values (199,null)");
+            // случайное число, чтоб подзапрос на количество занятых id не делать, показалось избыточным
+            result = true;
         } catch (Exception e) {
-            return false;
+            result = false;
         }
+        connection.close();
+        return result;
     }
 
-    public static String[] getColumn(String table, String column) throws SQLException {
+    public static String[] getColumn(final String table, final String column) throws SQLException {
         List<String> result = new ArrayList<>();
         Connection connection = DBClient.getConnection();
         Statement statement = connection.createStatement();
 
         ResultSet resultSet = statement.executeQuery("select " + column + "as w from " + table);
-        int i = 0;
         while (resultSet.next()) {
             result.add(resultSet.getString("w"));
-            i++;
         }
+        connection.close();
         return result.toArray(new String[0]);
 
     }
